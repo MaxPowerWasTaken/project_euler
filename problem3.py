@@ -8,11 +8,13 @@ import math
 
 def get_factors(n:int) -> list:
     factors = []
-    for i in range(1, math.ceil(math.sqrt(n))):
+    for i in range(1, math.ceil(math.sqrt(n))+1):
         if n % i == 0:
             factors.append(int(i))
             factors.append(int(n/i))
-    return factors
+
+    # dedupe and re-sort to eliminate dupes for squares (9 -> [1,3,3,9])
+    return sorted(set(factors))
 
 def is_prime(n:int) -> bool:
     return True if len(get_factors(n)) == 2 else False
@@ -25,11 +27,13 @@ assert set(get_factors(10)) == set([1,2,5,10])
 assert set(get_factors(13)) == set([1,13])
 assert is_prime(10) == False
 assert is_prime(13) == True
+assert is_prime(9) == False
 assert set(get_prime_factors(13195)) == set([5, 7, 13, 29])
 
 # result
-N = 600851475143
-print(max(get_prime_factors(N)))
+if __name__ == "__main__":
+    N = 600851475143
+    print(max(get_prime_factors(N)))
 
 
 """
